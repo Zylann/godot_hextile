@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://hextile.gdshader" type="Shader" id=1]
+[ext_resource path="res://textures/Rocks07_col.png" type="Texture" id=2]
+[ext_resource path="res://textures/Rocks07_nrm.png" type="Texture" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/u_show_weights = 0.0
+shader_param/u_tile_rate = 4.0
+shader_param/u_tile_rot_strength = 0.8636
+shader_param/u_use_regular_tiling = 0.0
+shader_param/u_roughness = 0.5
+shader_param/u_albedo_texture = ExtResource( 2 )
+shader_param/u_normal_texture = ExtResource( 3 )
+
+[sub_resource type="PlaneMesh" id=2]
+size = Vector2( 100, 100 )
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_texture = ExtResource( 2 )
+roughness = 0.5
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 3 )
+uv1_scale = Vector3( 20, 20, 20 )
+
+[sub_resource type="ProceduralSky" id=3]
+sky_top_color = Color( 0.243137, 0.376471, 0.517647, 1 )
+
+[sub_resource type="Environment" id=4]
+background_mode = 2
+background_sky = SubResource( 3 )
+
+[sub_resource type="CubeMesh" id=5]
+
+[node name="Node" type="Node"]
+
+[node name="GroundHextile" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+material_override = SubResource( 1 )
+mesh = SubResource( 2 )
+
+[node name="GroundClassic" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+visible = false
+material_override = SubResource( 6 )
+mesh = SubResource( 2 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.91303, 0.229556, -0.337165, -0.0313655, 0.863668, 0.503084, 0.406684, -0.448755, 0.795755, -4.50245, 1.96136, 0 )
+shadow_enabled = true
+directional_shadow_normal_bias = 0.2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.65801, 1.85654, 7.15409 )
+mesh = SubResource( 5 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -0.113213, -0.99357, 0.000791155, 0, 0.000796274, 1, -0.993571, 0.113213, -9.01484e-05, 5.24806, 6.00982, -1.51938 )
